@@ -13,7 +13,7 @@
         function initMap() {
             const map = new google.maps.Map(document.getElementById("map"), {
                 zoom: 20,
-                center: { lat: -33.9, lng: 151.2 },
+                center: {lat: -33.9, lng: 151.2},
             });
 
             // Get the user's current location
@@ -27,12 +27,6 @@
                     // Set user's current location as map center
                     map.setCenter(userLocation);
 
-                    // Add user's current location marker
-                    new google.maps.Marker({
-                        position: userLocation,
-                        map
-                    });
-
                     // Add new markers every 3 seconds
                     setInterval(function () {
                         new google.maps.Marker({
@@ -40,7 +34,15 @@
                                 lat: userLocation.lat,
                                 lng: userLocation.lng,
                             },
-                            map
+                            map,
+                            icon: {
+                                path: google.maps.SymbolPath.CIRCLE,
+                                scale: 5,
+                                fillColor: "blue",
+                                fillOpacity: 1,
+                                strokeColor: "white",
+                                strokeWeight: 2,
+                            },
                         });
                     }, 3000);
                 });
