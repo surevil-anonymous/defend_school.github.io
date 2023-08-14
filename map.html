@@ -10,43 +10,50 @@
     <title>Map</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script>
+        let map;
+        let userLocationMarker;
+
         function initMap() {
-            const map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 20,
-                center: {lat: -33.9, lng: 151.2},
+            map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 25,
+                center: { lat: -33.9, lng: 151.2 },
             });
 
-            // Get the user's current location
+            // Get the user's current location and set marker
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function (position) {
-                    const userLocation = {
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude,
-                    };
-
-                    // Set user's current location as map center
-                    map.setCenter(userLocation);
-
-                    // Add new markers every 3 seconds
-                    setInterval(function () {
-                        new google.maps.Marker({
-                            position: {
-                                lat: userLocation.lat,
-                                lng: userLocation.lng,
-                            },
-                            map,
-                            icon: {
-                                path: google.maps.SymbolPath.CIRCLE,
-                                scale: 5,
-                                fillColor: "blue",
-                                fillOpacity: 1,
-                                strokeColor: "white",
-                                strokeWeight: 2,
-                            },
-                        });
-                    }, 3000);
-                });
+                navigator.geolocation.getCurrentPosition(updateUserLocation);
+                navigator.geolocation.watchPosition(updateUserLocation);
             }
+        }
+
+        function updateUserLocation(position) {
+            alert(position)
+            const userLocation = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+            };
+
+            // Set user's current location as map center
+            map.setCenter(userLocation);
+
+            // Remove the previous user location marker
+            if (userLocationMarker) {
+                userLocationMarker.setMap(null);
+            }
+
+            // Add user's current location marker as a blue dot
+            userLocationMarker = new google.maps.Marker({
+                position: userLocation,
+                map,
+                icon: {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    scale: 6,
+                    fillColor: "blue",
+                    fillOpacity: 1,
+                    strokeColor: "white",
+                    strokeWeight: 2,
+                },
+            });
         }
 
         window.initMap = initMap;
