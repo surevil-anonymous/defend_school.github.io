@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"/>
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <title>AR Camera</title>
     <style>
         /* CSS for the AR camera interface */
@@ -14,8 +15,16 @@
     </style>
 </head>
 <body>
-<h1>AR Camera</h1>
-<!-- Add your AR camera content here -->
+<a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+    <!-- Add AR markers here -->
+    <a-marker preset="custom" type="pattern" url="https://dt-universe.oss-cn-shanghai.aliyuncs.com/ar-source/pattern-2d.patt">
+        <!-- Add your AR model here -->
+        <a-entity gltf-model="https://dt-universe.oss-cn-shanghai.aliyuncs.com/ar-source/3d.glb" scale="0.1 0.1 0.1"></a-entity>
+    </a-marker>
+
+    <!-- Add camera entity -->
+    <a-entity camera></a-entity>
+</a-scene>
 
 <nav class="navbar fixed-bottom bg-body-tertiary">
     <div class="container-fluid">
