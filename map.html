@@ -12,6 +12,7 @@
     <script>
         let map;
         let userLocationMarker;
+        const userLocationHistory = []; // Array to store user's location history
 
         function initMap() {
             map = new google.maps.Map(document.getElementById("map"), {
@@ -21,13 +22,11 @@
 
             // Get the user's current location and set marker
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(updateUserLocation);
                 navigator.geolocation.watchPosition(updateUserLocation);
             }
         }
 
         function updateUserLocation(position) {
-            alert(position)
             const userLocation = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude,
@@ -36,7 +35,7 @@
             // Set user's current location as map center
             map.setCenter(userLocation);
 
-            // Remove the previous user location marker
+            // Update user's location marker
             if (userLocationMarker) {
                 userLocationMarker.setMap(null);
             }
@@ -54,6 +53,21 @@
                     strokeWeight: 2,
                 },
             });
+
+            // Add current location to user's location history
+            userLocationHistory.push(userLocation);
+
+            // Update the polyline to show the user's route
+            if (userLocationHistory.length > 1) {
+                const routePolyline = new google.maps.Polyline({
+                    path: userLocationHistory,
+                    geodesic: true,
+                    strokeColor: "#FF0000",
+                    strokeOpacity: 1.0,
+                    strokeWeight: 2,
+                });
+                routePolyline.setMap(map);
+            }
         }
 
         window.initMap = initMap;
