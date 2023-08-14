@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+    <title>Defend the School</title>
+    <style>
+        /* CSS for the starting screen */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('resources/defend-school-background.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+<div class="d-grid gap-2" style="margin-top: 20vh">
+    <button id="nextMissionButton" class="btn btn-success btn-lg" type="button">Next Mission
+    </button>
+    <button id="exitButton" class="btn btn-danger btn-lg" type="button">Exit Game</button>
+</div>
+
+<script>
+    // JavaScript for starting the game
+    const startButton = document.getElementById("exitButton");
+
+    startButton.addEventListener("click", () => {
+        window.location.href = "index.html"; // Navigate to the map navigation page
+    });
+</script>
+</body>
+</html>

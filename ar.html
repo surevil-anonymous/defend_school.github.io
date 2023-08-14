@@ -1,0 +1,45 @@
+<!-- ar.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+    <title>AR Camera</title>
+    <style>
+        /* CSS for the AR camera interface */
+        /* Add your CSS styles here */
+    </style>
+</head>
+<body>
+<h1>AR Camera</h1>
+<!-- Add your AR camera content here -->
+
+<nav class="navbar fixed-bottom bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="map.html">
+            <img src="resources/map.svg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+            Map
+        </a>
+        <a class="navbar-brand mb-0 h1" href="ar.html" style="color: #0a53be">
+            <img src="resources/ar-active.svg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+            AR Camera
+        </a>
+    </div>
+</nav>
+
+<script>
+    // JavaScript for the tab navigation
+    const tabs = document.querySelectorAll(".tab");
+
+    tabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+            tabs.forEach(t => t.classList.remove("active"));
+            tab.classList.add("active");
+        });
+    });
+</script>
+</body>
+</html>
