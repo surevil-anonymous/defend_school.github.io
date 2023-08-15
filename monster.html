@@ -13,6 +13,59 @@
     <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
     <title>Monster</title>
     <style>
+        .progress-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            z-index: 9999;
+        }
+
+        .progress {
+            height: 20px;
+        }
+
+        .progress-bar {
+            transition: width 0.3s;
+        }
+
+        .checkbox-container {
+            position: absolute;
+            bottom: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+        }
+
+        .explosion-container {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            height: 20vh;
+            width: 20vh;
+            z-index: 999; /* Higher z-index to ensure it's on top */
+            display: none; /* Initially hidden */
+        }
+
+        .gesture-container {
+            position: absolute;
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            display: none; /* Initially hidden */
+        }
+
+        .victory-container {
+            position: absolute;
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            display: none; /* Initially hidden */
+        }
     </style>
 </head>
 <body>
@@ -25,6 +78,7 @@
 >
 
     <a-entity
+            class="monster"
             gltf-model="https://dt-universe.oss-cn-shanghai.aliyuncs.com/ar-source/monster.glb"
             position="0 0.8 -3" scale="5 5 5" rotation="30 0 0" animation-mixer="clip: flying; loop: running"
             xrextras-hold-drag
@@ -32,35 +86,108 @@
             xrextras-pinch-scale
     >
     </a-entity>
+</a-scene>
 
-    <nav class="navbar fixed-bottom bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="map.html">
-                <img src="icons/map.svg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
-                Map
-            </a>
-            <a class="navbar-brand" href="ar.html">
-                <img src="icons/ar.svg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
-                Mission
-            </a>
-            <a class="navbar-brand" href="monster.html" style="color: #0a53be">
-                <img src="icons/monster-active.svg" alt="Logo" width="30" height="24"
-                     class="d-inline-block align-text-top">
-                Monster
-            </a>
-        </div>
-    </nav>
+<img class="explosion-container"
+     src="https://dt-universe.oss-cn-shanghai.aliyuncs.com/ar-source/boom-unscreen.gif"/>
 
-    <script>
-        // JavaScript for the tab navigation
-        const tabs = document.querySelectorAll(".tab");
+<div class="progress-container">
+    <div class="progress" role="progressbar" aria-label="Danger example"
+         aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar bg-danger" style="width: 100%"></div>
+    </div>
+</div>
 
-        tabs.forEach(tab => {
-            tab.addEventListener("click", () => {
-                tabs.forEach(t => t.classList.remove("active"));
-                tab.classList.add("active");
-            });
+<div class="checkbox-container">
+    <div class="btn-group" role="group">
+        <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
+        <label class="btn btn-outline-success" for="btncheck1">Mission 1</label>
+
+        <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">
+        <label class="btn btn-outline-success" for="btncheck2">Mission 2</label>
+
+        <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off">
+        <label class="btn btn-outline-success" for="btncheck3">Mission 3</label>
+
+        <input type="checkbox" class="btn-check" id="btncheck4" autocomplete="off">
+        <label class="btn btn-outline-success" for="btncheck4">Mission 4</label>
+    </div>
+</div>
+
+<div class="gesture-container">
+    <button id="gesture-button" type="button" class="btn btn-danger">Gesture Hit</button>
+</div>
+
+<div class="victory-container">
+    <button id="victory-button" type="button" class="btn btn-primary">Victory!!!</button>
+</div>
+
+<nav class="navbar fixed-bottom bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="map.html">
+            <img src="icons/map.svg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+            Map
+        </a>
+        <a class="navbar-brand" href="ar.html">
+            <img src="icons/ar.svg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+            Mission
+        </a>
+        <a class="navbar-brand" href="monster.html" style="color: #0a53be">
+            <img src="icons/monster-active.svg" alt="Logo" width="30" height="24"
+                 class="d-inline-block align-text-top">
+            Monster
+        </a>
+    </div>
+</nav>
+
+<script>
+    const checkboxes = document.querySelectorAll('.btn-check');
+    const progressBar = document.querySelector('.progress-bar');
+
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            const checkedCheckboxes = Array.from(checkboxes).filter(c => c.checked);
+            const progressPercentage = (1 - checkedCheckboxes.length / checkboxes.length) * 90 + 10;
+            if (progressPercentage === 10) {
+                const gestureContainer = document.querySelector('.gesture-container');
+                gestureContainer.style.display = 'block';
+            }
+            progressBar.style.width = progressPercentage + '%';
         });
-    </script>
+    });
+
+    const gestureButton = document.getElementById("gesture-button");
+    gestureButton.addEventListener("click", () => {
+        const explosionImage = document.querySelector('.explosion-container');
+        explosionImage.style.display = 'block'; // Show the GIF image
+        setTimeout(function() {
+            explosionImage.style.display = 'none'; // Hide the GIF image after 1 second
+        }, 500);
+
+        const monster = document.querySelector('.monster');
+        // monster.setAttribute("position", "0 1.6 -3");
+        monster.setAttribute("rotation", "0 0 0");
+        monster.setAttribute("animation-mixer", "clip: idle; loop: idle");
+        monster.setAttribute("animation", {
+            property: "position",
+            from: "0 2 -3",
+            to: "0 1.6 -3",
+            dur: 300, // 1 second duration
+            easing: "linear"
+        });
+        progressBar.style.width = '0%';
+        setTimeout(function() {
+            const gestureContainer = document.querySelector('.gesture-container');
+            gestureContainer.style.display = 'none';
+            const victoryContainer = document.querySelector('.victory-container');
+            victoryContainer.style.display = 'block';
+        }, 1000);
+
+        const victoryButton = document.getElementById("victory-button");
+        victoryButton.addEventListener("click", () => {
+            window.location.href = "exit.html"; // Navigate to the map navigation page
+        });
+    });
+</script>
 </body>
 </html>
