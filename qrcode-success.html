@@ -3,36 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"/>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
     <title>Defend the School</title>
     <style>
-        /* CSS for the starting screen */
         body {
-            margin: 0;
-            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-image: url('resources/defend-school-background.png');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
+            margin: 0;
+            background-color: #f0f0f0;
             font-family: Arial, sans-serif;
+        }
+
+        .message-container {
+            text-align: center;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .message {
+            font-size: 36px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-<button style="margin-top: 20vh" id="startButton" class="btn btn-success rounded-pill px-3 btn-lg" type="button">Start Game</button>
+<div class="message-container">
+    <div class="message">Mission Completed!</div>
+    <p>Congratulations! You've successfully completed the mission.</p>
+    <button class="button" id="backButton">Continue</button>
+</div>
 
 <script>
     // JavaScript for starting the game
-    const startButton = document.getElementById("startButton");
+    const startButton = document.getElementById("backButton");
 
     startButton.addEventListener("click", () => {
-        window.location.href = "map.html"; // Navigate to the map navigation page
+        window.location.href = "index.html"; // Navigate to the map navigation page
     });
 </script>
 </body>
